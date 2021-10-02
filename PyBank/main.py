@@ -11,31 +11,45 @@ start_date = datetime.datetime(2010, 1, 1)
 num_months = (end_date.year - start_date.year) *12 + (end_date.month - start_date.month)
 
 #read in the csv file
-with open (csvpath, 'r') as csvfile:
+with open (csvpath, newline="", encoding = "utf-8") as budget:
     #split the data on commas
-    csvreader = csv.reader(csvfile, delimiter=',')
+    csvreader = csv.reader(budget, delimiter=',')
 
     #read the header row first
-    csv_header = next(csvreader)
-
-    print("Financial Analysis")
-    print("----------------------------------")
-    print(num_months)
-
-    #the total net amount of "profit/losses over the entire period
-    sum_profit = 0
-    sum_loss = 0
-    totalPL = 0
-    profit = 0
-
+    header = next(csvreader)
+    
+    
+    #create empty lists for iteration
+    total_months = []
+    total_profit = []
+    monthly_profit_change = []
+   
+    #iterate through months to obtain monthly change in profits
     for row in csvreader:
-        profit = int(row[1])
-        if profit >0:
-            sum_profit = sum_profit + profit
-        elif profit <0:
-            sum_loss = sum_loss + profit
-        totalPL = sum_profit + sum_loss
-    print(f"Total : {totalPL}")
+        total_months.append(row[0])
+        total_profit.append(int(row[1]))
+
+    for i in range(len(total_profit)-1):
+        #take difference between two months and append montly profit change
+        monthly_profit_change.append(total_profit[i+1]-total_profit[i])
+
+    #obtain max and min of the monthly profit change list
+    max_increase_value = max(monthly_profit_change)
+    max_decrease_value = min(monthly_profit_change)
+
+    #match month of max and min index
+    max_increase_month = monthly_profit_change.index(max(monthly_profit_change)) + 1
+    max_decrease_month = monthly_profit_change.index(min(monthly_profit_change)) + 1
+
+#Print statement
+print("Financial Analysis")
+print("----------------------------------")
+print(num_months)
+print(f"Total : ${sum(total_profit)}")
+print(f"Average Change: {round(sum(monthly_profit_change)/len(monthly_profit_change),2)}")
+print(f"Greatest Increase in Profits: {total_months[max_increase_month]} (${(str(max_increase_value))})")
+print(f"Greatest Decrease in Profits: {total_months[max_decrease_month]} (${(str(max_decrease_value))})")
+
 
     
 
