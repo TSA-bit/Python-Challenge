@@ -46,11 +46,24 @@ print("Financial Analysis")
 print("----------------------------------")
 print(num_months)
 print(f"Total : ${sum(total_profit)}")
-print(f"Average Change: {round(sum(monthly_profit_change)/len(monthly_profit_change),2)}")
-print(f"Greatest Increase in Profits: {total_months[max_increase_month]} (${(str(max_increase_value))})")
+print(f"Average Change: ${round(sum(monthly_profit_change)/len(monthly_profit_change),2)}")
+print(f"Greatest Increase in Profits: {total_months[max_increase_month]} (${total_months[max_increase_month]})")
 print(f"Greatest Decrease in Profits: {total_months[max_decrease_month]} (${(str(max_decrease_value))})")
 
+#specify file to write to
+output_path = os.path.join("output", "new.csv")
 
-    
+#open the file using "write mode".
+with open(output_path, 'w') as csv.file:
+
+#initialize csv writer
+    csvwriter - csv.writer(csvfile)
+    csvwriter.writerow("Financial Analysis")
+    csvwriter.writerow("----------------------------------")
+    csvwriter.writerow(num_months)
+    csvwriter.writerow(f"Total : ${sum(total_profit)}")
+    csvwriter.writerow(f"Average Change: ${round(sum(monthly_profit_change)/len(monthly_profit_change),2)}")
+    csvwriter.writerow(f"Greatest Increase in Profits: {total_months[max_increase_month]} (${total_months[max_increase_month]})")
+    csvwriter.writerow(f"Greatest Decrease in Profits: {total_months[max_decrease_month]} (${(str(max_decrease_value))})")
 
 
